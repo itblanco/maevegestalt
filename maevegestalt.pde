@@ -107,8 +107,8 @@ public void keyPressed() {
     }
     selectedColl = new HE_MeshCollection();
   }
-  if (key == 'o') {
-    ortho(-width/2, width/2, -height/2, height/2, 1, 1000000);
+  if (keyCode == KeyEvent.VK_SPACE) {
+    selectedColl = new HE_MeshCollection();
   }
 }
 
@@ -117,9 +117,15 @@ public void mousePressed() {
   switch(mouseButton) {
     case(LEFT):
     if (selectedMesh != null) { 
-      if (selectedColl.size() > 1 && keyCode == SHIFT) selectedColl.add(selectedMesh);
-      else if (keyCode == ALT) selectedColl.remove(selectedMesh);
-      else selectedColl.add(selectedMesh);
+      if ((selectedColl.size() > 0 && keyCode == SHIFT) || selectedColl.size() == 0) selectedColl.add(selectedMesh);
+      else if (selectedColl.size() == 1) {
+        HE_Mesh mesh = selectedColl.getMesh(0);
+        if (mesh == selectedMesh) selectedColl.remove(selectedMesh);
+        else {
+          selectedColl = new HE_MeshCollection();
+          selectedColl.add(selectedMesh);
+        }
+      } else if (keyCode == ALT && selectedColl.size() > 1) selectedColl.remove(selectedMesh);
     }
     break;
     case(RIGHT):
@@ -135,7 +141,7 @@ public void initGUI() {
   ControlFont.sharp();
   CColor guicol = new CColor(0xffEDB016, 0xff505050, selectCol, 0xffffffff, 0xffffffff);
   cp5 = new ControlP5(this, roboto).setColor(guicol);
-  //cp5.addButton("flipProjection").setPosition(10, 10).setSize(90, 18).setLabel("PERSP PROJECTION").setColor(guicol);
+
   Group proj = cp5.addGroup("proj")
     .setPosition(10, 25)
     .setSize(100, 35)
@@ -160,8 +166,8 @@ public void initGUI() {
     .setPosition(5, 5)
     .setSize(140, 16)
     .setGroup(operations);
-  cp5.addButton("splitMesh")
-    .setPosition(5, 5)
+  cp5.addButton("review")
+    .setPosition(5, 25)
     .setSize(140, 16)
     .setGroup(operations);
 
