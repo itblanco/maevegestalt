@@ -70,24 +70,28 @@ public void reorganizeMesh() {
   }
 }
 
+
+// ---------- Run in a separate thread ----------
 public void selectMesh() {
   while (true) {    
     HE_Mesh outMesh = null;
-    HE_MeshIterator mi = meshColl.mItr();
-    float closestDistance = -1;
-    while (mi.hasNext() && ray != null) {
-      HE_Mesh mesh = mi.next();
-      HET_MeshOp.HE_FaceLineIntersection fi = HET_MeshOp.getClosestIntersection(mesh, ray);
-      if (fi != null) {
-        WB_Coord point = fi.getPoint();
-        float distance = (float)WB_Point.getDistance(point, ray.getOrigin());
-        if (distance < closestDistance || closestDistance < 0) {
-          closestDistance = distance;
-          outMesh = mesh;
-        }
-      } else continue;
+    if (mouseEvent != null && mouseEvent.getAction() == MouseEvent.MOVE) {
+      HE_MeshIterator mi = meshColl.mItr();
+      float closestDistance = -1;
+      while (mi.hasNext() && ray != null) {
+        HE_Mesh mesh = mi.next();
+        HET_MeshOp.HE_FaceLineIntersection fi = HET_MeshOp.getClosestIntersection(mesh, ray);
+        if (fi != null) {
+          WB_Coord point = fi.getPoint();
+          float distance = (float)WB_Point.getDistance(point, ray.getOrigin());
+          if (distance < closestDistance || closestDistance < 0) {
+            closestDistance = distance;
+            outMesh = mesh;
+          }
+        } else continue;
+      }
     }
     tempSelectMesh = outMesh;
-    delay(50);
+    delay(100);
   }
 }

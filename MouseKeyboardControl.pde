@@ -21,7 +21,7 @@ public void keyPressed() {
   }
 }
 
-public void mousePressed() {    
+public void mouseClicked(MouseEvent e) {    
   switch(mouseButton) {
     case(LEFT):
     if (selectedMesh != null) { 
@@ -40,4 +40,29 @@ public void mousePressed() {
 
     break;
   }
+}
+
+MouseEvent mouseEvent = null;
+public void mouseMoved(MouseEvent e) {
+  mouseEvent = e;  
+}
+
+public void mouseExited() {
+  pause();
+}
+
+public void mouseEntered() {
+  resume();
+}
+
+public void mouseWheel(MouseEvent e) {
+  
+}
+
+public void focusLost() {
+ pause(); 
+}
+
+public void focusGained() {
+  resume();
 }

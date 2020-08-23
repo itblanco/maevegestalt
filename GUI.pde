@@ -1,7 +1,7 @@
 RadioButton changeProjRadio;
 int previousRadioButton;
 public void initGUI() {
-  ControlFont roboto = new ControlFont(createFont("Roboto-Light.ttf", 10)); 
+  ControlFont roboto = new ControlFont(font10); 
   ControlFont.sharp();
   CColor guicol = new CColor(0xffEDB016, 0xff505050, selectCol, 0xffffffff, 0xffffffff);
   cp5 = new ControlP5(this, roboto).setColor(guicol);
@@ -25,14 +25,28 @@ public void initGUI() {
     .activate(0);
   changeProjection(0); 
   
-  // ---------- PROJECTION group ----------
-  
+  // ---------- CREATION group ----------
+  Group creation = cp5.addGroup("creation")
+    .setPosition(120, 25)
+    .setSize(150, 50)
+    .setBackgroundColor(color(100, 50))
+    .setBarHeight(15);
+  cp5.addButton("createMeshBox")
+    .setPosition(5, 5)
+    .setSize(140, 16)
+    .setLabel("box")
+    .setGroup(creation);
+  cp5.addButton("another")
+    .setPosition(5, 24)
+    .setSize(140, 16)
+    .setGroup(creation);
+    
+  creationSubTools();
   
   // ---------- OPERATIONS group ----------
   Group operations = cp5.addGroup("operations")
-    .setPosition(120, 25)
-    .setSize(150, 35)
-    //.setLabel("projection")
+    .setPosition(280, 25)
+    .setSize(150, 50)
     .setBackgroundColor(color(100, 50))
     .setBarHeight(15);
   cp5.addButton("splitMesh")
@@ -47,6 +61,54 @@ public void initGUI() {
 
 
   
+}
+
+void creationSubTools() {
+  // ---------- BOX ----------
+  Group box = cp5.addGroup("createBox")
+    .setPosition(width-210, 25)
+    .setSize(200, 157)
+    .setBackgroundColor(color(100, 50))
+    .setBarHeight(15)
+    .disableCollapse()
+    .setLabel("create box")
+    .setVisible(false);
+    
+  cp5.addSlider("boxw")
+    .setPosition(5, 5)
+    .setSize(190, 20)
+    .setRange(10, 1000)
+    .setGroup(box)
+    .getCaptionLabel()
+    .setText("width")
+    .align(ControlP5Constants.RIGHT, ControlP5Constants.CENTER);
+  cp5.addSlider("boxh")
+    .setPosition(5, 28)
+    .setSize(190, 20)
+    .setRange(10, 1000)
+    .setGroup(box)
+    .getCaptionLabel()
+    .setText("height")
+    .align(ControlP5Constants.RIGHT, ControlP5Constants.CENTER);
+  cp5.addSlider("boxd")
+    .setPosition(5, 51)
+    .setSize(190, 20)
+    .setRange(10, 1000)
+    .setGroup(box)
+    .getCaptionLabel()
+    .setText("depth")
+    .align(ControlP5Constants.RIGHT, ControlP5Constants.CENTER);
+    
+  cp5.addButton("finishMeshBox")
+    .setPosition(5, 120)
+    .setSize(93, 30)
+    .setGroup(box)
+    .setLabel("ok");
+  cp5.addButton("cancelMeshBox")
+    .setPosition(102, 120)
+    .setSize(93, 30)
+    .setGroup(box)
+    .setLabel("cancel");
 }
 
 public void changeProjection(int a) {
