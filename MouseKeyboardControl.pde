@@ -1,6 +1,6 @@
 public void keyPressed() {
   if (key == 's') {
-    splitMesh();
+    sliceMesh();
   }
   if (key == 'r') {
     reorganizeMesh();

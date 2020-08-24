@@ -106,4 +106,7 @@ public void draw() {
   cam.beginHUD();
   cp5.draw();
   cam.endHUD();
+  
+  String title = "fps: " + frameRate;
+  surface.setTitle(title);
 }

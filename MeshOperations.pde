@@ -1,5 +1,5 @@
 float rotateR = 0.6f;
-public void splitMesh() {
+public void sliceMesh() {
   List<HE_Mesh> meshes;
   if (selectedColl.size() > 0) {
     meshes = selectedColl.toList();
