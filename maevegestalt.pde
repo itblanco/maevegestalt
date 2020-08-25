@@ -32,8 +32,8 @@ public void setup() {
   size(1300, 700, P3D);
   font10 = createFont("Roboto-Light.ttf", 10);
   cam = new PeasyCam(this, meshSize);
-  cam.rotateY(PI/4);
-  cam.rotateX(PI/4);
+  cam.rotateY(PI*0.25);
+  cam.rotateX(-PI*0.75);
   cam.setResetOnDoubleClick(false);
 
   render = new WB_Render(this);
