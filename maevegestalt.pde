@@ -7,7 +7,7 @@ import wblut.processing.*;
 import peasy.*; 
 import java.util.*; 
 import controlP5.*; 
-import com.jogamp.newt.event.KeyEvent; 
+import com.jogamp.newt.event.KeyEvent;
 
 WB_Render render;
 HE_MeshCollection meshColl;
@@ -26,6 +26,7 @@ color creationCol = #456F76;
 
 ControlP5 cp5;
 PFont font10;
+PShader meshShader;
 
 public void setup() {
   //fullScreen(P3D);
@@ -37,6 +38,8 @@ public void setup() {
   cam.setResetOnDoubleClick(false);
 
   render = new WB_Render(this);
+
+  meshShader = loadShader("meshFrag.glsl", "meshVert.glsl");
 
   selectedColl = new HE_MeshCollection();
 
@@ -87,8 +90,10 @@ public void draw() {
   scale(1);
   if(creationMode) fill(creationCol);
   else fill(30);
-
+  meshShader.set("u_time", millis()/1000.0f);
+  shader(meshShader);
   render.drawFaces(meshColl);
+  resetShader();
 
   noFill();
   stroke(255);
